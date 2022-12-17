@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="form1">
+    <h1>REGRISTARSE A LA CUENTA</h1>
+    <p>USUARIO</p>
+    <input type="email" name="" id="email">
+    <P>PASSWORD</P>
+    <input type="password" name="" id="pass">
+    <br><br>
+    <button id="ingresar">GUARDAR</button>
+    <button type="reset" id="limpiar" onclick="limpiar()">LIMPIAR</button>
+    </div>
+    
+    <div id="sesion">
+    <h1>INICIAR SESION</h1>
+    <p>Escriba su correo y contraseña para acceder a la pagina</p>
+    <input type="email" name="" id="email1" placeholder="Aqui tu correo"><br>
+    <input type="password" name="" id="pass1" placeholder="Aqui tu contraseña"><br>
+    <button id="acceder">INICIAR</button>
+    </div>
+
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+  //creamos una nueva cuenta
+  import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-auth.js";
+  
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-_zW27SblAROZvG9yszXVUAZfa_qfFmY",
+    authDomain: "autenticacion-11276.firebaseapp.com",
+    projectId: "autenticacion-11276",
+    storageBucket: "autenticacion-11276.appspot.com",
+    messagingSenderId: "675076844690",
+    appId: "1:675076844690:web:4be66fb19174815d004a4b"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  
+  //conectamos
+  document.getElementById("ingresar").addEventListener("click",function(){
+    const email= document.getElementById("email").value;
+    const password = document.getElementById("pass").value;
+  //realizo la coneccion
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    alert("tu cuenta ha sido creada")
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+    alert("Estas regristado o aun no lo has hecho")
+  });
+  })
+  
+  //conectamos con el ingreso
+  document.getElementById("acceder").addEventListener("click",function(){
+    const email1= document.getElementById("email1").value;
+    const password1 = document.getElementById("pass1").value;
+
+    const auth = getAuth();
+signInWithEmailAndPassword(auth, email1, password1)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+    alert("tu cuenta esta activa")
+    //Aparecera una pagina
+    window.open("https://intranet.certus.edu.pe/Login/","mi pagina favorita","width=300px , height=200 px")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert("esta cuenta no existe o has llenado mal")
+  });
+
+})
+    //limpiamos con esta funcion
+    function limpiar(){
+        document.getElementById("form1").reset();
+    }
+
+
+
+
+    </script>
+</body>
+</html>
